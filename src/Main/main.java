@@ -23,6 +23,7 @@ public class main {
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
         window.setVisible(true);
+        gp.startGameThread();
     }
 
 }
