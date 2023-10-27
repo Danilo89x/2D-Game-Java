@@ -6,6 +6,7 @@
 
 package Main;
 
+import Enity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -22,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable{
         
     final int originalTileSize = 16;
     final int scale = 3;
-    final int tileSize = originalTileSize * scale;
+    public final int tileSize = originalTileSize * scale;
     final int screenCol = 16;
     final int screenRow = 12;
     final int screenWidth = screenCol * tileSize;
@@ -31,8 +32,9 @@ public class GamePanel extends JPanel implements Runnable{
     int y = 100;
     int speed = 4;
     
-    keyHandler kh = new keyHandler();
+    public keyHandler kh = new keyHandler();
     Thread gameThread;
+    Player player = new Player(this);
 
     public GamePanel() {
     this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -43,15 +45,7 @@ public class GamePanel extends JPanel implements Runnable{
     
     }
     public void update(){
-        if (kh.wPressed || kh.upPressed) {
-            y -= speed;
-        }else if(kh.sPressed || kh.downPressed){
-            y += speed;
-        }else if(kh.aPressed || kh.leftPressed){
-            x -= speed;
-        }else if(kh.dPressed || kh.rightPressed){
-            x += speed;
-        }
+       player.update();
         
     }
     public void startGameThread(){
@@ -61,10 +55,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.red);
-        g2.fillRect(x, y, tileSize, tileSize);
+        super.paintComponent(g); 
+        player.drawPlayerImages(g);
     }
 
     @Override
